@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shop</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:#f6f7f8;color:#1a1a1a}
+header{background:#075e54;color:#fff;padding:18px 16px;text-align:center;font-size:1.3rem;font-weight:600}
+main{max-width:1000px;margin:0 auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px #0002;display:flex;flex-direction:column;cursor:pointer;text-decoration:none;color:inherit;position:relative;transition:transform .15s}
+.card:hover{transform:translateY(-3px)}
+.img{aspect-ratio:1;background:#e8ecef center/cover;display:flex;align-items:center;justify-content:center;font-size:3rem;color:#9aa5ad}
+.body{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.name{font-weight:600}.desc{font-size:.85rem;color:#555;flex:1}.price{font-weight:700;color:#075e54}
+.btn{background:#25d366;color:#fff;text-align:center;padding:10px;border-radius:8px;font-weight:600;margin-top:6px}
+.badge{position:absolute;top:8px;left:8px;background:#e53935;color:#fff;font-size:.7rem;padding:3px 8px;border-radius:20px;font-weight:700}
+</style>
+</head>
+<body>
+<header id="title">Shop</header>
+<main id="grid"></main>
+<script>
+fetch('products.json?'+Date.now()).then(r=>r.json()).then(d=>{
+  document.getElementById('title').textContent=d.shopName;
+  document.title=d.shopName;
+  const list=[...d.products].sort((a,b)=>new Date(b.added)-new Date(a.added));
+  const grid=document.getElementById('grid');
+  list.forEach((p,i)=>{
+    const msg=`Hi, enikku "${p.name}" (${d.currency}${p.price}) venam. Available aano?`;
+    const a=document.createElement('a');
+    a.className='card';
+    a.href=`https://wa.me/${d.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+    a.target='_blank';a.rel='noopener';
+    a.innerHTML=`${i===0?'<span class="badge">NEW</span>':''}
+      <div class="img" style="${p.image?`background-image:url('${p.image}')`:''}">${p.image?'':'🛍️'}</div>
+      <div class="body"><div class="name"></div><div class="desc"></div>
+      <div class="price">${d.currency}${p.price}</div><div class="btn">WhatsApp-il order cheyyu</div></div>`;
+    a.querySelector('.name').textContent=p.name;
+    a.querySelector('.desc').textContent=p.description||'';
+    grid.appendChild(a);
+  });
+});
+</script>
+</body>
+</html>

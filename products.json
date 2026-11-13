@@ -1,0 +1,10 @@
+{
+  "shopName": "My Shop",
+  "whatsappNumber": "917306694373",
+  "currency": "₹",
+  "products": [
+    {"id": 1, "name": "Sample Product 1", "price": 499, "description": "Ithu sample product aanu. Real details ivide maattuka.", "image": "", "added": "2026-11-01"},
+    {"id": 2, "name": "Sample Product 2", "price": 799, "description": "Sample description.", "image": "", "added": "2026-11-08"},
+    {"id": 3, "name": "Sample Product 3 (Latest)", "price": 999, "description": "Ettavum puthiya product.", "image": "", "added": "2026-11-13"}
+  ]
+}
